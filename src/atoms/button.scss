@@ -1,0 +1,16 @@
+@import '../styles/settings/settings';
+
+.brand-button {
+    padding: 1rem;
+  
+    &--accent {
+      // BEM 'Modifier' class
+      background-color: $brand-accent; // Comes from 'styles/settings/settings.scss'
+      border-color: $brand-accent;
+  
+      @include hover() {
+        background-color: black;
+        border-color: black;
+      }
+    }
+  }
