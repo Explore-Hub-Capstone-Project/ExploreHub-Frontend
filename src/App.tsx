@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
 import { EmailSignup } from "./molecules/email-signup";
 import { Home } from "./organisms/home";
+import LoginPage from "./molecules/LoginPage";
+import SignUpPage from "./molecules/SignUpPage";
 
 class App extends Component {
   render() {
@@ -9,7 +11,8 @@ class App extends Component {
       <>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<EmailSignup />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       </>
     );
