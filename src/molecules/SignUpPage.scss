@@ -1,0 +1,63 @@
+.signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=2062&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+
+  .signup-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 40px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    h2 {
+      color: #005f73;
+      margin-bottom: 20px;
+    }
+
+    .signup-form {
+      display: flex;
+      flex-direction: column;
+
+      input {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        cursor: pointer;
+        background-color: #118ab2;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+
+        &:hover {
+          background-color: #06d6a0;
+        }
+      }
+    }
+
+    .already-member {
+      margin-top: 15px;
+
+      button {
+        background: none;
+        color: #0077b6;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
