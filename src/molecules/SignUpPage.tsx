@@ -8,6 +8,7 @@ const SignUpPage = () => {
     firstname: "",
     lastname: "",
     email: "",
+    username: "",
     mobile: "",
     country: "",
     password: "",
@@ -26,7 +27,7 @@ const SignUpPage = () => {
     event.preventDefault();
     const data = { ...formValues };
 
-    const response = await fetch("http://localhost:8000/register", {
+    const response = await fetch("http://localhost:5000/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,6 +82,13 @@ const SignUpPage = () => {
             name="email"
             placeholder="Email ID"
             value={formValues.email}
+            onChange={handleInputChange}
+          />
+          <input
+            type="username"
+            name="username"
+            placeholder="Username"
+            value={formValues.username}
             onChange={handleInputChange}
           />
           <input

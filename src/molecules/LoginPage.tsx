@@ -9,19 +9,18 @@ const LoginPage = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const credentials = { username, password }; // Gather these from form inputs
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
 
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch("http://localhost:5000/user/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
+      body: formData,
     });
 
     if (response.ok) {
-      const { token } = await response.json();
-      localStorage.setItem("token", token); // Store the token
+      const { access_token } = await response.json();
+      localStorage.setItem("token", access_token); // Store the token
       console.log("Logged in successfully");
       navigate("/");
     } else {
@@ -37,7 +36,7 @@ const LoginPage = () => {
         <form className="login-form" onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Username or Email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
