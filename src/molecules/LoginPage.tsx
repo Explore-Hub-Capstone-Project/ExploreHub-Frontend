@@ -3,30 +3,28 @@ import { useNavigate } from "react-router-dom";
 import "./LoginPage.scss";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const credentials = { username, password }; // Gather these from form inputs
 
     const response = await fetch("http://localhost:8000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify({ email, password }),
     });
 
     if (response.ok) {
       const { token } = await response.json();
-      localStorage.setItem("token", token); // Store the token
+      localStorage.setItem("token", token);
       console.log("Logged in successfully");
       navigate("/");
     } else {
       console.error("Login failed");
-      // Show error message
     }
   };
 
@@ -37,9 +35,9 @@ const LoginPage = () => {
         <form className="login-form" onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
