@@ -3,7 +3,8 @@ import Container from "react-bootstrap/Container";
 import { Button, AccentButton } from "../atoms/button";
 import { Link } from "react-router-dom";
 import axios, { isCancel, AxiosError } from "axios";
-
+import Header from "./header";
+import "../styles/home.scss";
 import "./signup-section.scss";
 
 async function getAllUsers() {
@@ -28,8 +29,9 @@ export function Home() {
   }
 
   return (
-    <div className="home">
+    <div className="home-container">
       <Container>
+        <Header />
         <Link to="/signup">
           <Button title={"Signup"} />
         </Link>
