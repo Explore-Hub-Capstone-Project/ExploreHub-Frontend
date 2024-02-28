@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./SignUpPage.scss";
+import "../styles/SignUpPage.scss";
 
 const SignUpPage = () => {
   const navigate = useNavigate();

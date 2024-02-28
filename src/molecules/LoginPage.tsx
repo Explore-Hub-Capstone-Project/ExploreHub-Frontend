@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LoginPage.scss";
+import "../styles/LoginPage.scss";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
     const formData = new FormData();
     formData.append("username", username);
     formData.append("password", password);
+
 
     const response = await fetch("http://localhost:5000/user/login", {
       method: "POST",
@@ -21,11 +23,21 @@ const LoginPage = () => {
     if (response.ok) {
       const { access_token } = await response.json();
       localStorage.setItem("token", access_token); // Store the token
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      const { token } = await response.json();
+      localStorage.setItem("token", token);
+
       console.log("Logged in successfully");
       navigate("/");
     } else {
       console.error("Login failed");
-      // Show error message
     }
   };
 
@@ -36,9 +48,15 @@ const LoginPage = () => {
         <form className="login-form" onSubmit={handleLogin}>
           <input
             type="text"
+
             placeholder="Username or Email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+
           />
           <input
             type="password"
