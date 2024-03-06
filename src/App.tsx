@@ -4,7 +4,8 @@ import { EmailSignup } from "./molecules/email-signup";
 import { Home } from "./organisms/home";
 import LoginPage from "./molecules/LoginPage";
 import SignUpPage from "./molecules/SignUpPage";
-import FlightSearch from "./molecules/SearchFlights";
+import SearchFlights from "./molecules/SearchFlights";
+import SearchRoundTrip from "./molecules/SearchRoundTrip";
 
 class App extends Component {
   render() {
@@ -14,7 +15,11 @@ class App extends Component {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/SearchFlight" element={<FlightSearch />} />
+          <Route path="/search-flights" element={<SearchFlights />} />
+          <Route
+            path="/search-round-trip-flights"
+            element={<SearchRoundTrip />}
+          />
         </Routes>
       </>
     );

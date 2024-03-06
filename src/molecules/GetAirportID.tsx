@@ -1,7 +1,7 @@
 import React from "react";
 
 const fetchAirportID = async (airportName, direction) => {
-  const baseUrl = "http://localhost:5000";
+  const baseUrl = "http://localhost:5000/user";
   const endpoint = `${baseUrl}/search-${direction}-airport/`;
   const payload =
     direction === "from" ? { from_: airportName } : { to_: airportName };
