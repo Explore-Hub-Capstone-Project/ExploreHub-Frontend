@@ -3,19 +3,23 @@ import { useNavigate } from "react-router-dom";
 import "../styles/LoginPage.scss";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("http://localhost:8000/login", {
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+
+    // This request should use formData instead of Json
+    // OAuth2 specifies that when using the "password flow" (that we are using)
+    // the client/user must send a username and password fields as form data.
+    const response = await fetch("http://localhost:5000/user/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
+      body: formData,
     });
 
     if (response.ok) {
@@ -35,9 +39,9 @@ const LoginPage = () => {
         <form className="login-form" onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Username or Email"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
