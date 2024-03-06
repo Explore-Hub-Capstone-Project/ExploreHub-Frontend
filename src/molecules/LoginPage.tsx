@@ -14,17 +14,14 @@ const LoginPage = () => {
     formData.append("username", username);
     formData.append("password", password);
 
-    // This request should use formData instead of Json
-    // OAuth2 specifies that when using the "password flow" (that we are using)
-    // the client/user must send a username and password fields as form data.
     const response = await fetch("http://localhost:5000/user/login", {
       method: "POST",
       body: formData,
     });
 
     if (response.ok) {
-      const { token } = await response.json();
-      localStorage.setItem("token", token);
+      const { access_token } = await response.json();
+      localStorage.setItem("token", access_token);
       console.log("Logged in successfully");
       navigate("/");
     } else {
