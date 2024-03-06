@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import Container from "react-bootstrap/Container";
-import { Button, AccentButton } from "../atoms/button";
-import { Link } from "react-router-dom";
 import axios, { isCancel, AxiosError } from "axios";
 import Header from "./header";
+import Hero from "./hero";
 import "../styles/home.scss";
-import "./signup-section.scss";
 
 async function getAllUsers() {
   try {
@@ -19,7 +16,7 @@ async function getAllUsers() {
   }
 }
 
-export function Home() {
+function Home() {
   const [data, setData] = useState("");
 
   async function doQuery(e) {
@@ -30,14 +27,12 @@ export function Home() {
 
   return (
     <div className="home-container">
-      <Container>
-        <Header />
-        <Link to="/signup">
-          <Button title={"Signup"} />
-        </Link>
-        <AccentButton title={"Query Backend"} onClick={(e) => doQuery(e)} />
-        <p>{data}</p>
-      </Container>
+      <Header />
+
+      {/* <NavigationBar /> */}
+      <Hero />
     </div>
   );
 }
+
+export default Home;

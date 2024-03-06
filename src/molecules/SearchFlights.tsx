@@ -81,6 +81,7 @@ const FlightSearch = () => {
         <div className="flight-search">
           <div className="search-type">
             <button
+              disabled
               className={`search-type-button ${searchType === "ONE_WAY" ? "active" : ""}`}
               onClick={() => handleSearchTypeChange("ONE_WAY")}
             >

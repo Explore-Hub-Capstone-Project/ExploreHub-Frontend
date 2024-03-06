@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
 import { EmailSignup } from "./molecules/email-signup";
-import { Home } from "./organisms/home";
+import Home from "./organisms/home";
 import LoginPage from "./molecules/LoginPage";
 import SignUpPage from "./molecules/SignUpPage";
 import SearchFlights from "./molecules/SearchFlights";
