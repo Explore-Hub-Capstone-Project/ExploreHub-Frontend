@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import "../styles/WeatherWidget.scss";
 
 const WeatherWidget = ({ weatherData }) => {
   const location = useLocation();
