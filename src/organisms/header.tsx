@@ -27,9 +27,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    sessionStorage.removeItem("userEmail");
     setUserName("");
-    // setShowDropdown(false);
     navigate("/");
   };
 
