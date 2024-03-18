@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../organisms/header";
 import "../styles/SearchRoundTrip.scss";
+import WeatherWidget from "./WeatherWidget";
 
 const SearchRoundTrip = () => {
   const location = useLocation();
   const [flights, setFlights] = useState([]);
+  const [weather, setWeather] = useState([]);
 
   const [isFlightLoading, setIsFlightLoading] = useState(false);
 
@@ -77,14 +79,40 @@ const SearchRoundTrip = () => {
     }
   };
 
+  const fetchWeather = async () => {
+    const requestBody = {
+      city: to,
+    };
+    console.log("Sending Weather City", requestBody);
+
+    try {
+      const response = await fetch("http://localhost:5000/user/get-weather/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+      setWeather(data);
+    } catch (error) {
+      console.error("Failed to Weather", error);
+    }
+  };
+
   useEffect(() => {
     fetchFlights();
+    fetchWeather();
   }, []);
 
   return (
     <div className="main-page-container">
       <Header />
       {/* <div>Space for Weather Data</div> */}
+      <WeatherWidget weatherData={weather} />
       <div className="pageContainer">
         <div className="leftColumn">
           {flights.map((flight, index) => (
