@@ -8,6 +8,8 @@ const SearchRoundTrip = () => {
   const location = useLocation();
   const [flights, setFlights] = useState([]);
   const [weather, setWeather] = useState([]);
+  const [hotels, setHotels] = useState([]);
+  const [isHotelLoading, setIsHotelLoading] = useState(false);
 
   const [isFlightLoading, setIsFlightLoading] = useState(false);
 
@@ -79,6 +81,43 @@ const SearchRoundTrip = () => {
     }
   };
 
+  const fetchHotels = async () => {
+    setIsHotelLoading(true);
+    const requestBody = {
+      geoId: parseInt(airportData?.toData?.To_parent_id, 10),
+      checkIn: date,
+      checkOut: returningDate,
+      adults: parseInt(numberOfAdults, 10),
+    };
+    console.log("Sending Hotel Request Bodyy", requestBody);
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/hotel/search-hotels/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-RapidAPI-Key": process.env.X_RAPID_API_KEY,
+            "X-RapidAPI-Host": process.env.X_RAPID_API_HOST,
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+      setHotels(data);
+    } catch (error) {
+      console.error("Failed to fetch Hotels", error);
+    } finally {
+      setIsHotelLoading(false);
+    }
+  };
+
   const fetchWeather = async () => {
     const requestBody = {
       city: to,
@@ -106,6 +145,7 @@ const SearchRoundTrip = () => {
   useEffect(() => {
     fetchFlights();
     fetchWeather();
+    fetchHotels();
   }, []);
 
   return (
