@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../organisms/header";
 import "../styles/SearchRoundTrip.scss";
 import WeatherWidget from "./WeatherWidget";
+import HotelWidget from "./HotelWidget";
 
 const SearchRoundTrip = () => {
   const location = useLocation();
@@ -191,6 +192,12 @@ const SearchRoundTrip = () => {
       <Header />
       {/* <div>Space for Weather Data</div> */}
       <WeatherWidget weatherData={weather} />
+      {selectedHotelDetails && (
+        <HotelWidget
+          details={selectedHotelDetails}
+          onClose={() => setSelectedHotelDetails(null)}
+        />
+      )}
       <div className="pageContainer">
         <div className="leftColumn">
           {flights.map((flight, index) => (
@@ -273,6 +280,7 @@ const SearchRoundTrip = () => {
             </div>
           ))}
         </div>
+
         <div className="rightColumn">
           {isHotelLoading ? (
             <div className="spinner">{/* Add Spinner Here */}</div>
@@ -304,16 +312,6 @@ const SearchRoundTrip = () => {
                 {/* Add to cart here */}
               </div>
             ))
-          )}
-          {selectedHotelDetails && (
-            <div className="hotelDetailsPopup">
-              <div className="popupContent">
-                <h2>{selectedHotelDetails.accomodation_name}</h2>
-                <button onClick={() => setSelectedHotelDetails(null)}>
-                  Close
-                </button>
-              </div>
-            </div>
           )}
         </div>
       </div>
