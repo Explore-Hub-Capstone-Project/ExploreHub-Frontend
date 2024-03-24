@@ -130,7 +130,99 @@
   }
 
   .rightColumn {
-    // Hotel SCSS
+    display: flex;
+    flex-direction: column;
+    gap: 20px; // ensures space between hotel cards
+    padding: 20px; // add some padding around the entire column
+
+    .spinner {
+      display: flex;
+      justify-content: center; // center the loader horizontally
+      align-items: center; // center the loader vertically
+      height: 100%; // full height to center vertically inside the rightColumn
+    }
+
+    .hotelCard {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e1e1e1; // subtle border for the card
+      background-color: #ffffff;
+      border-radius: 8px; // rounded corners
+      overflow: hidden; // ensures child elements do not bleed outside the border-radius
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // slight shadow for depth
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-15px); // subtle lift effect on hover
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); // enhanced shadow on hover
+      }
+
+      .hotelInfo {
+        padding: 15px; // internal spacing
+
+        .hotelName {
+          font-size: 1.25em;
+          color: #333;
+          font-weight: bold;
+          margin-bottom: 5px; // space between title and info
+        }
+
+        .primaryInfo {
+          color: #666;
+          margin-bottom: 10px; // space between info and rating
+        }
+
+        .bubbleRating {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px; // space between rating and pricing
+
+          .bubble {
+            color: #ccc; // default star color
+            margin-right: 2px; // space between stars
+
+            &.active {
+              color: #ffd700; // gold color for active stars
+            }
+          }
+        }
+
+        .priceInfo {
+          display: flex;
+          align-items: center;
+          justify-content: space-between; // price on one side, book later on the other
+
+          .price {
+            font-size: 1.5em;
+            color: #27ae60; // price color
+            font-weight: bold;
+          }
+
+          .bookLater {
+            font-size: 0.875em;
+            color: #999;
+            text-align: right;
+          }
+        }
+      }
+
+      .bookIcon {
+        // padding: 10px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        width: 50px;
+        height: 50px;
+        align-self: flex-end; // position the booking icon towards the bottom-right
+        cursor: pointer;
+        fill: #27ae60; // icon color
+
+        &:hover {
+          fill: darken(#000000, 10%); // icon color darkens on hover
+        }
+      }
+    }
   }
 }
 

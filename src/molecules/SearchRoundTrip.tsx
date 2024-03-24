@@ -235,7 +235,35 @@ const SearchRoundTrip = () => {
             </div>
           ))}
         </div>
-        <div className="rightColumn">{/* Add Hotel Data Here */}</div>
+        <div className="rightColumn">
+          {isHotelLoading ? (
+            <div className="spinner">{/* Add Spinner Here */}</div>
+          ) : (
+            hotels.map((hotel, index) => (
+              <div key={index} className="hotelCard">
+                <div className="hotelInfo">
+                  <div className="hotelName">{`${hotel.accomodation}, ${hotel.accomodation_region}`}</div>
+                  <div className="primaryInfo">{hotel.breakfast_info}</div>
+                  <div className="bubbleRating">
+                    {[...Array(5)].map((_, i) => (
+                      <span
+                        key={i}
+                        className={`bubble ${i < hotel.accomodation_rating.rating ? "active" : ""}`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <div className="priceInfo">
+                    <span className="price">{hotel.priceForDisplay}</span>
+                    <span className="bookLater">Book now, pay later</span>
+                  </div>
+                </div>
+                {/* Add to cart here */}
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
