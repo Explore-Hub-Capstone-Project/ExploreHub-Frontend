@@ -130,7 +130,84 @@
   }
 
   .rightColumn {
-    // Hotel SCSS
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+
+    .spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .hotelCard {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e1e1e1;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .hotelInfo {
+        padding: 15px;
+
+        .hotelName {
+          font-size: 1.25em;
+          color: #333;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+
+        .primaryInfo {
+          color: #666;
+          margin-bottom: 10px;
+        }
+
+        .bubbleRating {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+
+          .bubble {
+            color: #ccc;
+            margin-right: 2px;
+
+            &.active {
+              color: #ffd700;
+            }
+          }
+        }
+
+        .priceInfo {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .price {
+            font-size: 1.5em;
+            color: #27ae60;
+            font-weight: bold;
+          }
+
+          .bookLater {
+            font-size: 0.875em;
+            color: #999;
+            text-align: right;
+          }
+        }
+      }
+    }
   }
 }
 
