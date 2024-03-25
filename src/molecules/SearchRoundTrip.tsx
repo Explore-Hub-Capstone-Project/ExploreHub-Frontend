@@ -198,6 +198,7 @@ const SearchRoundTrip = () => {
           onClose={() => setSelectedHotelDetails(null)}
         />
       )}
+
       <div className="pageContainer">
         <div className="leftColumn">
           {flights.map((flight, index) => (
@@ -280,7 +281,6 @@ const SearchRoundTrip = () => {
             </div>
           ))}
         </div>
-
         <div className="rightColumn">
           {isHotelLoading ? (
             <div className="spinner">{/* Add Spinner Here */}</div>
