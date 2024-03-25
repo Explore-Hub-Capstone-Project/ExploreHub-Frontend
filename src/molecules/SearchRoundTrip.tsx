@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../organisms/header";
 import "../styles/SearchRoundTrip.scss";
 import WeatherWidget from "./WeatherWidget";
+import HotelWidget from "./HotelWidget";
 
 const SearchRoundTrip = () => {
   const location = useLocation();
@@ -10,6 +11,8 @@ const SearchRoundTrip = () => {
   const [weather, setWeather] = useState([]);
   const [hotels, setHotels] = useState([]);
   const [isHotelLoading, setIsHotelLoading] = useState(false);
+  const [hotelDetails, setHotelDetails] = useState(null);
+  const [selectedHotelDetails, setSelectedHotelDetails] = useState(null);
 
   const [isFlightLoading, setIsFlightLoading] = useState(false);
 
@@ -81,6 +84,30 @@ const SearchRoundTrip = () => {
     }
   };
 
+  const fetchWeather = async () => {
+    const requestBody = {
+      city: to,
+    };
+    console.log("Sending Weather City", requestBody);
+
+    try {
+      const response = await fetch("http://localhost:5000/user/get-weather/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+      setWeather(data);
+    } catch (error) {
+      console.error("Failed to Weather", error);
+    }
+  };
+
   const fetchHotels = async () => {
     setIsHotelLoading(true);
     const requestBody = {
@@ -118,28 +145,40 @@ const SearchRoundTrip = () => {
     }
   };
 
-  const fetchWeather = async () => {
+  const fetchHotelDetails = async (accomodationId) => {
     const requestBody = {
-      city: to,
+      id: accomodationId,
+      checkIn: date,
+      checkOut: returningDate,
     };
-    console.log("Sending Weather City", requestBody);
-
+    console.log("Sending ID to fetch Details", requestBody);
     try {
-      const response = await fetch("http://localhost:5000/user/get-weather/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      });
-
+      const response = await fetch(
+        "http://localhost:5000/hotel/get-hotels-details/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-RapidAPI-Key": process.env.X_RAPID_API_KEY,
+            "X-RapidAPI-Host": process.env.X_RAPID_API_HOST,
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
       const data = await response.json();
       console.log(data);
-      setWeather(data);
+      setSelectedHotelDetails(data);
     } catch (error) {
-      console.error("Failed to Weather", error);
+      console.error("Failed to fetch hotel details", error);
+    } finally {
     }
+  };
+
+  const handleHotelClick = (accomodationId) => {
+    fetchHotelDetails(accomodationId);
   };
 
   useEffect(() => {
@@ -153,6 +192,13 @@ const SearchRoundTrip = () => {
       <Header />
       {/* <div>Space for Weather Data</div> */}
       <WeatherWidget weatherData={weather} />
+      {selectedHotelDetails && (
+        <HotelWidget
+          details={selectedHotelDetails}
+          onClose={() => setSelectedHotelDetails(null)}
+        />
+      )}
+
       <div className="pageContainer">
         <div className="leftColumn">
           {flights.map((flight, index) => (
@@ -240,7 +286,11 @@ const SearchRoundTrip = () => {
             <div className="spinner">{/* Add Spinner Here */}</div>
           ) : (
             hotels.map((hotel, index) => (
-              <div key={index} className="hotelCard">
+              <div
+                key={index}
+                className="hotelCard"
+                onClick={() => handleHotelClick(hotel.accomodation_id)}
+              >
                 <div className="hotelInfo">
                   <div className="hotelName">{`${hotel.accomodation}, ${hotel.accomodation_region}`}</div>
                   <div className="primaryInfo">{hotel.breakfast_info}</div>
