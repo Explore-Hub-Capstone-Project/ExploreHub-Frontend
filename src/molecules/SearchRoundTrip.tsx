@@ -4,6 +4,7 @@ import Header from "../organisms/header";
 import "../styles/SearchRoundTrip.scss";
 import WeatherWidget from "./WeatherWidget";
 import HotelWidget from "./HotelWidget";
+import { ReactComponent as IconSvg } from "../styles/Icons/add_shopping_cart_black_24dp.svg";
 
 const SearchRoundTrip = () => {
   const location = useLocation();
@@ -181,6 +182,15 @@ const SearchRoundTrip = () => {
     fetchHotelDetails(accomodationId);
   };
 
+  const handleAddToCart = (flight) => {
+    // addToCart(flight);
+    console.log("Flight added to cart details", flight);
+  };
+  const handleAddHotelToCart = (hotel) => {
+    // addToCart(hotel);
+    console.log("Hotel added to cart details", hotel);
+  };
+
   useEffect(() => {
     fetchFlights();
     fetchWeather();
@@ -276,7 +286,10 @@ const SearchRoundTrip = () => {
               <div className="flightPrice">
                 <span className="price">${flight.price}</span>
 
-                {/* Add to Cart */}
+                <IconSvg
+                  className="bookIcon"
+                  onClick={() => handleAddToCart(flight)}
+                />
               </div>
             </div>
           ))}
@@ -286,13 +299,13 @@ const SearchRoundTrip = () => {
             <div className="spinner">{/* Add Spinner Here */}</div>
           ) : (
             hotels.map((hotel, index) => (
-              <div
-                key={index}
-                className="hotelCard"
-                onClick={() => handleHotelClick(hotel.accomodation_id)}
-              >
+              <div className="hotelCard">
                 <div className="hotelInfo">
-                  <div className="hotelName">{`${hotel.accomodation}, ${hotel.accomodation_region}`}</div>
+                  <div
+                    className="hotelName"
+                    key={index}
+                    onClick={() => handleHotelClick(hotel.accomodation_id)}
+                  >{`${hotel.accomodation}, ${hotel.accomodation_region}`}</div>
                   <div className="primaryInfo">{hotel.breakfast_info}</div>
                   <div className="bubbleRating">
                     {[...Array(5)].map((_, i) => (
@@ -309,7 +322,10 @@ const SearchRoundTrip = () => {
                     <span className="bookLater">Book now, pay later</span>
                   </div>
                 </div>
-                {/* Add to cart here */}
+                <IconSvg
+                  className="bookIcon"
+                  onClick={() => handleAddHotelToCart(hotel)}
+                />
               </div>
             ))
           )}
