@@ -183,11 +183,9 @@ const SearchRoundTrip = () => {
   };
 
   const handleAddToCart = (flight) => {
-    // addToCart(flight);
     console.log("Flight added to cart details", flight);
   };
   const handleAddHotelToCart = (hotel) => {
-    // addToCart(hotel);
     console.log("Hotel added to cart details", hotel);
   };
 
