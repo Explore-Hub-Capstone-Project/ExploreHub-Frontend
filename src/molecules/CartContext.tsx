@@ -7,6 +7,7 @@ interface CartProviderProps {
 interface CartContextType {
   cartItems: any[];
   addToCart: (item: any) => void;
+  removeFromCart: (itemId: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -18,11 +19,16 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCartItems((prevItems) => [...prevItems, item]);
   };
 
+  const removeFromCart = (itemId: string) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  };
+
   return (
     <CartContext.Provider
       value={{
         cartItems: cartItems,
         addToCart,
+        removeFromCart,
       }}
     >
       {children}

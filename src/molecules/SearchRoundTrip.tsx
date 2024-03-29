@@ -5,6 +5,7 @@ import "../styles/SearchRoundTrip.scss";
 import WeatherWidget from "./WeatherWidget";
 import HotelWidget from "./HotelWidget";
 import { ReactComponent as IconSvg } from "../styles/Icons/add_shopping_cart_black_24dp.svg";
+import { useCart } from "./CartContext";
 
 const SearchRoundTrip = () => {
   const location = useLocation();
@@ -18,6 +19,8 @@ const SearchRoundTrip = () => {
   const [isFlightLoading, setIsFlightLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const { addToCart } = useCart();
 
   const {
     from,
@@ -183,9 +186,13 @@ const SearchRoundTrip = () => {
   };
 
   const handleAddToCart = (flight) => {
+    addToCart(flight);
     console.log("Flight added to cart details", flight);
   };
+
   const handleAddHotelToCart = (hotel) => {
+    addToCart(hotel);
+    localStorage.setItem("hotelDetails", JSON.stringify(hotel));
     console.log("Hotel added to cart details", hotel);
   };
 

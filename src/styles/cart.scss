@@ -1,0 +1,153 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+.main-page-container {
+  background-image: url("https://images.unsplash.com/photo-1562428309-f97fc8e256e7?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); /* Adjust the path to your image */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.cart-container {
+  display: flex;
+  gap: 100px;
+  padding-left: 70px;
+  padding-right: 70px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.details-column,
+.summary-column {
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.details-card,
+.summary-card {
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+h3 {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.flight-section,
+.hotel-info,
+.price-section {
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.flight-info,
+.hotel-info {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+
+  .hotel-title {
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-size: 20px;
+    font-style: normal;
+  }
+}
+
+.airline-display {
+  display: flex;
+  align-items: center;
+
+  .airline-logo {
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}
+
+.airline-details {
+  p {
+    margin: 0;
+    color: #555;
+  }
+}
+
+.price-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.tax {
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    margin-top: 15px;
+  }
+
+  &.total {
+    font-weight: bold;
+  }
+
+  .price-text {
+    color: #555;
+  }
+
+  .price {
+    color: #000;
+  }
+}
+
+button.checkout-button {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken(#007bff, 5%);
+  }
+}
+
+button.later-button {
+  width: 50%;
+  padding: 15px;
+  margin-top: 10px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: white;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken(#007bff, 5%);
+  }
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+  margin: 20px 0;
+}
