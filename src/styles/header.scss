@@ -42,7 +42,7 @@
   color: white;
   cursor: pointer;
   margin-right: 40px;
-  margin-left: -20px;
+  margin-left: 20px;
   font-weight: bold;
   font-size: 1rem;
 }
@@ -53,5 +53,24 @@
 }
 
 .user-name {
-  margin-right: 20px;
+  // margin-right: 20px;
+}
+
+.cart-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: 2px;
+  position: relative;
+  margin-left: -20px;
+  .cart-count {
+    position: relative;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: rgb(0, 0, 0);
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+  }
 }

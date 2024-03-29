@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/header.scss";
+import { useCart } from "../molecules/CartContext";
+import { ReactComponent as CartIconSvg } from "../styles/Icons/shopping_cart_FILL0_wght400_GRAD0_opsz24.svg";
 
 const Header = () => {
   const [userName, setUserName] = useState("");
+  const { cartItems } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +38,11 @@ const Header = () => {
     navigate("/Profile/");
   };
 
+  const handleCartClick = () => {
+    navigate("/cart/");
+    console.log("Cart Clicked");
+  };
+
   return (
     <header className="header-container">
       <div className="brand-name">ExploreHub</div>
@@ -58,7 +66,12 @@ const Header = () => {
             >
               Welcome, {userName}
             </button>
-
+            <div onClick={handleCartClick} style={{ cursor: "pointer" }}>
+              <CartIconSvg className="cart-icon" />
+              {cartItems.length > 0 && (
+                <span className="cart-count">{cartItems.length}</span>
+              )}
+            </div>
             <div>
               {" "}
               <button className="text-button" onClick={handleLogout}>
