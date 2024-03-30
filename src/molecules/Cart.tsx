@@ -79,8 +79,70 @@ const Cart = () => {
     return <div>Loading...</div>;
   }
 
-  const handleSaveButton = () => {
-    console.log("Save Button Pressed");
+  const handleSaveButton = async () => {
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("userEmail");
+    const userId = token;
+    const userEmail = email;
+
+    const transformCartItems = (cartItems) => {
+      return cartItems.map((item) => {
+        if (item.outbound && item.return) {
+          return {
+            outbound: item.outbound,
+            return_flight: item.return,
+            price: item.price,
+          };
+        } else if (item.hotel) {
+          return {
+            hotel: {
+              accomodation_id: item.accomodation_id,
+              accomodation: item.accomodation,
+              breakfast_info: item.breakfast_info,
+              accomodation_region: item.accomodation_region,
+              accomodation_rating: item.accomodation_rating,
+              accomodation_provider: item.accomodation_provider,
+              priceForDisplay: "$" + item.hotel.priceForDisplay,
+              strikethroughPrice: item.strikethroughPrice,
+              priceDetails: item.priceDetails,
+              accomodation_photos: item.accomodation_photos,
+            },
+          };
+        } else {
+          return item;
+        }
+      });
+    };
+
+    const cartData = {
+      userEmail,
+      cartItems: transformCartItems(cartItems),
+    };
+
+    console.log(cartData);
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/user/save-for-later/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: JSON.stringify(cartData),
+        }
+      );
+      console.log(cartData);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Save successful:", data);
+    } catch (error) {
+      console.error("Error saving cart:", error);
+    }
+    return cartData;
   };
 
   const handleRemoveButton = (cartItems) => {
