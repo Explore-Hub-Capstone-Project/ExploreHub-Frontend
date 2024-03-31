@@ -87,25 +87,38 @@ const Cart = () => {
 
     const transformCartItems = (cartItems) => {
       return cartItems.map((item) => {
-        if (item.outbound && item.return) {
+        if (item.outbound && item.return_flight) {
           return {
             outbound: item.outbound,
-            return_flight: item.return,
+            return_flight: item.return_flight,
             price: item.price,
           };
         } else if (item.hotel) {
           return {
             hotel: {
-              accomodation_id: item.accomodation_id,
-              accomodation: item.accomodation,
-              breakfast_info: item.breakfast_info,
-              accomodation_region: item.accomodation_region,
-              accomodation_rating: item.accomodation_rating,
-              accomodation_provider: item.accomodation_provider,
-              priceForDisplay: "$" + item.hotel.priceForDisplay,
-              strikethroughPrice: item.strikethroughPrice,
-              priceDetails: item.priceDetails,
-              accomodation_photos: item.accomodation_photos,
+              accomodation_id: item.hotel.accomodation_id,
+              accomodation: item.hotel.accomodation,
+              breakfast_info: item.hotel.breakfast_info,
+              accomodation_region: item.hotel.accomodation_region,
+              accomodation_rating: {
+                count: item.hotel.accomodation_rating.count,
+                rating: item.hotel.accomodation_rating.rating,
+              },
+              accomodation_provider: item.hotel.accomodation_provider,
+              priceForDisplay: item.hotel.priceForDisplay
+                ? item.hotel.priceForDisplay
+                : "N/A",
+              strikethroughPrice: item.hotel.strikethroughPrice,
+              priceDetails: item.hotel.priceDetails,
+              accomodation_photos: item.hotel.accomodation_photos.map(
+                (photo) => ({
+                  url: photo.sizes.urlTemplate
+                    .replace("{width}", photo.sizes.maxWidth.toString())
+                    .replace("{height}", photo.sizes.maxHeight.toString()),
+                  maxWidth: photo.sizes.maxWidth,
+                  maxHeight: photo.sizes.maxHeight,
+                })
+              ),
             },
           };
         } else {
@@ -119,7 +132,8 @@ const Cart = () => {
       cartItems: transformCartItems(cartItems),
     };
 
-    console.log(cartData);
+    // console.log(cartData);
+    // console.log(JSON.stringify(cartData));
 
     try {
       const response = await fetch(
