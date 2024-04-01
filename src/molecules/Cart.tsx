@@ -137,7 +137,7 @@ const Cart = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/user/save-for-later/",
+        "http://localhost:5000/user/add_save_trip/",
         {
           method: "POST",
           headers: {
