@@ -7,6 +7,7 @@ import SignUpPage from "./molecules/SignUpPage";
 import SearchFlights from "./molecules/SearchFlights";
 import SearchRoundTrip from "./molecules/SearchRoundTrip";
 import Cart from "./molecules/Cart";
+import Profile from "./molecules/Profile";
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
             element={<SearchRoundTrip />}
           />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </>
     );

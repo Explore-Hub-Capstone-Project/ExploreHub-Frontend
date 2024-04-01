@@ -36,7 +36,7 @@ const Header = () => {
   };
 
   const handleProfile = () => {
-    navigate("/Profile/");
+    navigate("/profile/");
   };
 
   const handleCartClick = () => {
