@@ -20,8 +20,9 @@ const LoginPage = () => {
     });
 
     if (response.ok) {
-      const { access_token } = await response.json();
+      const { access_token, user } = await response.json();
       localStorage.setItem("token", access_token);
+      localStorage.setItem("userEmail", user.email);
       console.log("Logged in successfully");
       navigate("/");
     } else {

@@ -30,6 +30,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
     setUserName("");
     navigate("/");
   };

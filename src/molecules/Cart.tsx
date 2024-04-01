@@ -79,8 +79,80 @@ const Cart = () => {
     return <div>Loading...</div>;
   }
 
-  const handleSaveButton = () => {
-    console.log("Save Button Pressed");
+  const handleSaveButton = async () => {
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("userEmail");
+    const userId = token;
+    const userEmail = email;
+
+    const transformCartItems = (cartItems) => {
+      return cartItems.map((item) => {
+        if (item.outbound && item.return_flight) {
+          return {
+            outbound: item.outbound,
+            return_flight: item.return_flight,
+            price: item.price,
+          };
+        } else if (item.hotel) {
+          return {
+            hotel: {
+              accomodation_id: item.hotel.accomodation_id,
+              accomodation: item.hotel.accomodation,
+              breakfast_info: item.hotel.breakfast_info,
+              accomodation_region: item.hotel.accomodation_region,
+              accomodation_rating: {
+                count: item.hotel.accomodation_rating.count,
+                rating: item.hotel.accomodation_rating.rating,
+              },
+              accomodation_provider: item.hotel.accomodation_provider,
+              priceForDisplay: item.hotel.priceForDisplay
+                ? item.hotel.priceForDisplay
+                : "N/A",
+              strikethroughPrice: item.hotel.strikethroughPrice,
+              priceDetails: item.hotel.priceDetails,
+              accomodation_photos: item.hotel.accomodation_photos.map(
+                (photo) => ({
+                  url: photo.sizes.urlTemplate
+                    .replace("{width}", photo.sizes.maxWidth.toString())
+                    .replace("{height}", photo.sizes.maxHeight.toString()),
+                  maxWidth: photo.sizes.maxWidth,
+                  maxHeight: photo.sizes.maxHeight,
+                })
+              ),
+            },
+          };
+        } else {
+          return item;
+        }
+      });
+    };
+
+    const cartData = {
+      userEmail,
+      cartItems: transformCartItems(cartItems),
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/user/add_save_trip/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: JSON.stringify(cartData),
+        }
+      );
+      console.log(cartData);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Save successful:", data);
+    } catch (error) {
+      console.error("Error saving cart:", error);
+    }
+    return cartData;
   };
 
   const handleRemoveButton = (cartItems) => {
