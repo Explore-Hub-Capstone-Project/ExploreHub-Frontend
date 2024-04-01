@@ -131,10 +131,6 @@ const Cart = () => {
       userEmail,
       cartItems: transformCartItems(cartItems),
     };
-
-    // console.log(cartData);
-    // console.log(JSON.stringify(cartData));
-
     try {
       const response = await fetch(
         "http://localhost:5000/user/add_save_trip/",
