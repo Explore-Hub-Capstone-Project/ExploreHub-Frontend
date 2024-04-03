@@ -45,54 +45,57 @@ const Attractions = () => {
   }, [location_id]);
 
   return (
-    <div className="attractions-container">
-      <h1 className="attractions-title">Attractions</h1>
-      <div className="attractions-grid">
-        {attractions.map((attraction, index) => (
-          <div key={index} className="attraction-item">
-            <img
-              src={attraction.attraction_photos.large}
-              alt={attraction.attraction_name}
-              className="attraction-image"
-            />
-            <button
-              className="attraction-name"
-              onClick={() => setSelectedAttraction(attraction)}
-            >
-              {attraction.attraction_name}
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {selectedAttraction && (
-        <div className="attraction-widget">
-          <div className="widget-content">
-            <span
-              className="widget-close"
-              onClick={() => setSelectedAttraction(null)}
-            >
-              ×
-            </span>
-            <h2>{selectedAttraction.attraction_name}</h2>
-
-            <p>
-              <strong>Rating:</strong> {selectedAttraction.attraction_rating}
-            </p>
-            <p>
-              <strong>Description:</strong>{" "}
-              {selectedAttraction.attraction_description}
-            </p>
-            <p>
-              <strong>Category:</strong>{" "}
-              {selectedAttraction.attraction_category.join(", ")}
-            </p>
-            <p>
-              <strong>Address:</strong> {selectedAttraction.attraction_address}
-            </p>
-          </div>
+    <div className="attraction-container">
+      <div className="attractions-container">
+        <h1 className="attractions-title">Attractions</h1>
+        <div className="attractions-grid">
+          {attractions.map((attraction, index) => (
+            <div key={index} className="attraction-item">
+              <img
+                src={attraction.attraction_photos.large}
+                alt={attraction.attraction_name}
+                className="attraction-image"
+              />
+              <button
+                className="attraction-name"
+                onClick={() => setSelectedAttraction(attraction)}
+              >
+                {attraction.attraction_name}
+              </button>
+            </div>
+          ))}
         </div>
-      )}
+
+        {selectedAttraction && (
+          <div className="attraction-widget">
+            <div className="widget-content">
+              <span
+                className="widget-close"
+                onClick={() => setSelectedAttraction(null)}
+              >
+                ×
+              </span>
+              <h2>{selectedAttraction.attraction_name}</h2>
+
+              <p>
+                <strong>Rating:</strong> {selectedAttraction.attraction_rating}
+              </p>
+              <p>
+                <strong>Description:</strong>{" "}
+                {selectedAttraction.attraction_description}
+              </p>
+              <p>
+                <strong>Category:</strong>{" "}
+                {selectedAttraction.attraction_category.join(", ")}
+              </p>
+              <p>
+                <strong>Address:</strong>{" "}
+                {selectedAttraction.attraction_address}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
