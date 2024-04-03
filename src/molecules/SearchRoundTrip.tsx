@@ -205,8 +205,21 @@ const SearchRoundTrip = () => {
   return (
     <div className="main-page-container">
       <Header />
-      {/* <div>Space for Weather Data</div> */}
       <WeatherWidget weatherData={weather} />
+      <div className="attractions-button-container">
+        <button
+          onClick={() =>
+            window.open(
+              `${window.location.origin}/attractions?location_id=${airportData?.toData?.To_parent_id}`,
+              "_blank"
+            )
+          }
+          className="view-attractions-btn"
+        >
+          View Attractions
+        </button>
+      </div>
+
       {selectedHotelDetails && (
         <HotelWidget
           details={selectedHotelDetails}
