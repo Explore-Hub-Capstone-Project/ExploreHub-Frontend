@@ -19,7 +19,6 @@ const Profile = () => {
           if (response.ok) {
             const profile = await response.json();
             setUserProfile(profile);
-            return profile.email;
           } else {
             console.error("Failed to fetch profile");
           }
@@ -48,24 +47,24 @@ const Profile = () => {
               {userProfile ? (
                 <div>
                   <p>
-                    <strong>Name:</strong> {userProfile["firstname"] || null}{" "}
-                    {userProfile["lastname"] || null}
+                    <strong>Name:</strong> {userProfile["firstname"] || ""}{" "}
+                    {userProfile["lastname"] || ""}
                   </p>
                   <p>
-                    <strong>Username:</strong> {userProfile["username"] || null}
+                    <strong>Username:</strong> {userProfile["username"] || ""}
                   </p>
                   <p>
-                    <strong>Email:</strong> {userProfile["email"] || null}
+                    <strong>Email:</strong> {userProfile["email"] || ""}
                   </p>
                   <p>
-                    <strong>Phone:</strong> {userProfile["mobile"] || null}
+                    <strong>Phone:</strong> {userProfile["mobile"] || ""}
                   </p>
                   <p>
-                    <strong>Country:</strong> {userProfile["country"] || null}
+                    <strong>Country:</strong> {userProfile["country"] || ""}
                   </p>
                 </div>
               ) : (
-                <p>Loadin Profile....</p>
+                <p>Loading Profile...</p>
               )}
             </div>
           </div>
