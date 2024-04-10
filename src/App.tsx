@@ -8,6 +8,7 @@ import SearchFlights from "./molecules/SearchFlights";
 import SearchRoundTrip from "./molecules/SearchRoundTrip";
 import Cart from "./molecules/Cart";
 import Attractions from "./molecules/Attractions";
+import SearchOneWayFlight from "./molecules/SearchOneWayFlights";
 
 class App extends Component {
   render() {
@@ -24,6 +25,10 @@ class App extends Component {
           />
           <Route path="/cart" element={<Cart />} />
           <Route path="/attractions" element={<Attractions />} />
+          <Route
+            path="/search-one-way-flights"
+            element={<SearchOneWayFlight />}
+          />
         </Routes>
       </>
     );
