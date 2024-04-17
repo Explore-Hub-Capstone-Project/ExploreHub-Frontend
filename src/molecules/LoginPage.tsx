@@ -14,7 +14,7 @@ const LoginPage = () => {
     formData.append("username", username);
     formData.append("password", password);
 
-    const response = await fetch("http://localhost:5000/user/login", {
+    const response = await fetch("https://www.explorehub.lol/api/user/login", {
       method: "POST",
       body: formData,
     });

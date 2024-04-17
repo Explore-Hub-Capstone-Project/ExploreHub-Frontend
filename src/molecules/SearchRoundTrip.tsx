@@ -61,7 +61,7 @@ const SearchRoundTrip = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/user/search-round-trip-flights/",
+        "https://www.explorehub.lol/api/user/search-round-trip-flights/",
         {
           method: "POST",
           headers: {
@@ -95,11 +95,14 @@ const SearchRoundTrip = () => {
     console.log("Sending Weather City", requestBody);
 
     try {
-      const response = await fetch("http://localhost:5000/user/get-weather/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        "https://www.explorehub.lol/api/user/get-weather/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -124,7 +127,7 @@ const SearchRoundTrip = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/hotel/search-hotels/",
+        "https://www.explorehub.lol/api/hotel/search-hotels/",
         {
           method: "POST",
           headers: {
@@ -158,7 +161,7 @@ const SearchRoundTrip = () => {
     console.log("Sending ID to fetch Details", requestBody);
     try {
       const response = await fetch(
-        "http://localhost:5000/hotel/get-hotels-details/",
+        "https://www.explorehub.lol/api/hotel/get-hotels-details/",
         {
           method: "POST",
           headers: {

@@ -14,7 +14,7 @@ const Attractions = () => {
   useEffect(() => {
     const fetchAttractions = async () => {
       const response = await fetch(
-        `http://localhost:5000/attraction/search-attractions`,
+        `https://www.explorehub.lol/api/attraction/search-attractions`,
         {
           method: "POST",
           headers: {

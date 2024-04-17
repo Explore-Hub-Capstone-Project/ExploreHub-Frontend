@@ -12,7 +12,7 @@ const Header = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:5000/user/me", {
+      fetch("https://www.explorehub.lol/api/user/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -27,13 +27,16 @@ const SignUpPage = () => {
     event.preventDefault();
     const data = { ...formValues };
 
-    const response = await fetch("http://localhost:5000/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      "https://www.explorehub.lol/api/user/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     if (response.ok) {
       // Handle success
