@@ -34,6 +34,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: "./html"
-          target: "/var/www/explorehub.lol/html"
+          target: "/var/www/explorehub.lol"
 
 
