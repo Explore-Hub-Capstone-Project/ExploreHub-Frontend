@@ -23,8 +23,9 @@ jobs:
         run: npm install
 
       - name: Build React App
-        run: CI=false npm run build
-        run: mv ./build ./html
+        run: |
+          CI=false npm run build &&
+          mv ./build ./html
 
       - name: Copy Build to Server
         uses: appleboy/scp-action@v0.1.7
