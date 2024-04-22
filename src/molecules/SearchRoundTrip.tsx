@@ -61,7 +61,7 @@ const SearchRoundTrip = () => {
 
     try {
       const response = await fetch(
-        "https://www.explorehub.lol/api/user/search-round-trip-flights/",
+        process.env.REACT_APP_BACKEND_URL + "/user/search-round-trip-flights/",
         {
           method: "POST",
           headers: {
@@ -96,7 +96,7 @@ const SearchRoundTrip = () => {
 
     try {
       const response = await fetch(
-        "https://www.explorehub.lol/api/user/get-weather/",
+        process.env.REACT_APP_BACKEND_URL + "/user/get-weather/",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -108,7 +108,7 @@ const SearchRoundTrip = () => {
         throw new Error(`Error: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
+      console.log({ "/user/get-weather/": data });
       setWeather(data);
     } catch (error) {
       console.error("Failed to Weather", error);
@@ -127,7 +127,7 @@ const SearchRoundTrip = () => {
 
     try {
       const response = await fetch(
-        "https://www.explorehub.lol/api/hotel/search-hotels/",
+        process.env.REACT_APP_BACKEND_URL + "/hotel/search-hotels/",
         {
           method: "POST",
           headers: {
@@ -161,7 +161,7 @@ const SearchRoundTrip = () => {
     console.log("Sending ID to fetch Details", requestBody);
     try {
       const response = await fetch(
-        "https://www.explorehub.lol/api/hotel/get-hotels-details/",
+        process.env.REACT_APP_BACKEND_URL + "/hotel/get-hotels-details/",
         {
           method: "POST",
           headers: {
@@ -204,6 +204,8 @@ const SearchRoundTrip = () => {
     fetchWeather();
     fetchHotels();
   }, []);
+
+  // }, [fetchFlights, fetchHotels, fetchWeather, flights, hotels, weather]);
 
   return (
     <div className="main-page-container">

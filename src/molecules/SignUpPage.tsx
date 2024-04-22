@@ -28,7 +28,7 @@ const SignUpPage = () => {
     const data = { ...formValues };
 
     const response = await fetch(
-      "https://www.explorehub.lol/api/user/register",
+      process.env.REACT_APP_BACKEND_URL + "/user/register",
       {
         method: "POST",
         headers: {

@@ -14,10 +14,13 @@ const LoginPage = () => {
     formData.append("username", username);
     formData.append("password", password);
 
-    const response = await fetch("https://www.explorehub.lol/api/user/login", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      process.env.REACT_APP_BACKEND_URL + "/user/login",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     if (response.ok) {
       const { access_token, user } = await response.json();

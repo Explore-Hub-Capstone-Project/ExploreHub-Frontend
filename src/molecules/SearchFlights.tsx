@@ -25,9 +25,12 @@ const FlightSearch = () => {
 
   const handleSearchClick = async () => {
     try {
-      const airportData = await new Promise((resolve, reject) => {
-        getAirportIDs(from, to, (data) => resolve(data));
-      });
+      const airportData = await getAirportIDs(from, to, () => {});
+      // const airportData = await new Promise((resolve, reject) => {
+      //   getAirportIDs(from, to, (data) => resolve(data));
+      // });
+
+      console.log({ airportData });
 
       let path = "";
       switch (searchType) {

@@ -1,7 +1,7 @@
 import React from "react";
 
 const fetchAirportID = async (airportName, direction) => {
-  const baseUrl = "https://www.explorehub.lol/api/user";
+  const baseUrl = process.env.REACT_APP_BACKEND_URL + "/user";
   const endpoint = `${baseUrl}/search-${direction}-airport/`;
   const payload =
     direction === "from" ? { from_: airportName } : { to_: airportName };
@@ -23,9 +23,9 @@ const fetchAirportID = async (airportName, direction) => {
 
 export const getAirportIDs = async (from, to, onDataFetched) => {
   try {
-    const fromData = await fetchAirportID(from, "from");
-    const toData = await fetchAirportID(to, "to");
-    onDataFetched({ fromData, toData });
+    const fromDataPromise = fetchAirportID(from, "from");
+    const toDataPromise = fetchAirportID(to, "to");
+    return { fromData: await fromDataPromise, toData: await toDataPromise };
   } catch (error) {
     console.error("Failed to fetch airport IDs:", error);
     onDataFetched({ error: error.message });
