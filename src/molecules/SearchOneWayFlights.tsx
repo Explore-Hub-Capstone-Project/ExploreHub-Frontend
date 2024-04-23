@@ -49,7 +49,7 @@ const SearchOneWayFlight = () => {
 
     try {
       const response = await fetch(
-       process.env.REACT_APP_BACKEND_URL + "/user/search-one-way-flights",
+       process.env.REACT_APP_BACKEND_URL + "/user/search-one-way-flights/",
         {
           method: "POST",
           headers: {
@@ -81,7 +81,7 @@ const SearchOneWayFlight = () => {
     };
     console.log("Sending Weather City", requestBody);
     try {
-      const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/user/get-weather", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/user/get-weather/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
