@@ -5,12 +5,19 @@ import { ReactComponent as IconSvg } from "../styles/Icons/add_shopping_cart_bla
 import "../styles/SearchOneWay.scss";
 import WeatherWidget from "./WeatherWidget";
 import { useCart } from "./CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Lottie from "react-lottie";
+import animationData from "../styles/animations/Animation - 1713904519543.json";
 
 const SearchOneWayFlight = () => {
   const location = useLocation();
   const [flights, setFlights] = useState([]);
   const [weather, setWeather] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const flightNotify = () => toast.success("Flight Added to Cart!");
+  const [isDataLoading, setIsDataLoading] = useState(true);
+  const [notification, setNotification] = useState("");
   const {
     departureDate,
     searchType,
@@ -32,6 +39,15 @@ const SearchOneWayFlight = () => {
   const numberOfSeniors = "0";
   const classOfService = "ECONOMY";
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   const fetchFlights = async () => {
     setIsLoading(true);
     const requestBody = {
@@ -48,6 +64,7 @@ const SearchOneWayFlight = () => {
     console.log("Sending request body:", requestBody);
 
     try {
+      setIsDataLoading(true);
       const response = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/user/search-one-way-flights/",
         {
@@ -72,6 +89,7 @@ const SearchOneWayFlight = () => {
       console.error("Failed to fetch flights:", error);
     } finally {
       setIsLoading(false);
+      setIsDataLoading(false);
     }
   };
 
@@ -103,6 +121,8 @@ const SearchOneWayFlight = () => {
 
   const handleAddToCart = (flight) => {
     addToCart(flight);
+    setNotification("Flight added to Cart");
+    flightNotify();
     console.log("Flight added to cart details", flight);
   };
 
@@ -111,10 +131,31 @@ const SearchOneWayFlight = () => {
     fetchWeather();
   }, []);
 
+  if (isDataLoading) {
+    return (
+      <div className="loading-container">
+        <Lottie
+          options={defaultOptions}
+          height={400}
+          width={400}
+          className="lottie-animation"
+          isStopped={!isDataLoading}
+          isPaused={!isDataLoading}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="main-page-container">
       <Header />
       <WeatherWidget weatherData={weather} />
+      {notification && (
+        <div>
+          {" "}
+          <ToastContainer />{" "}
+        </div>
+      )}
       <div className="pageContainer">
         <div className="leftColumn">
           {flights.map((flight, index) => (
