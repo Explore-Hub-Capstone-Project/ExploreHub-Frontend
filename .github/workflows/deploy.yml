@@ -8,7 +8,7 @@ on:
 
 env:
   REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL}}
-  
+
 jobs:
   build_and_deploy:
     environment: production environment
@@ -30,7 +30,7 @@ jobs:
           CI=false npm run build &&
           mv ./build ./html
         with:
-          envs: REACT_APP_BACKEND_URL
+          env: REACT_APP_BACKEND_URL
 
       - name: Copy Build to Server
         uses: appleboy/scp-action@v0.1.7
