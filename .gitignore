@@ -25,3 +25,5 @@ yarn-error.log*
 .nvmrc
 .env
 .secrets
+
+package-lock.json
