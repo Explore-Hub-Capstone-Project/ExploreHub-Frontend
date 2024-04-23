@@ -133,7 +133,7 @@ const Cart = () => {
     };
     try {
       const response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "api/user/add_save_trip/",
+        process.env.REACT_APP_BACKEND_URL + "/user/add_save_trip/",
         {
           method: "POST",
           headers: {
