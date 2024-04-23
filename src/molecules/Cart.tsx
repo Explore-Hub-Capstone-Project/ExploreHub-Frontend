@@ -3,12 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../molecules/CartContext";
 import Header from "../organisms/header";
 import "../styles/cart.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Cart = () => {
   const { cartItems, removeFromCart } = useCart();
   const [isLoading, setIsLoading] = useState(true);
   const [flightDetails, setFlightDetails] = useState(null);
   const [hotelDetails, setHotelDetails] = useState(null);
+  const [notification, setNotification] = useState("");
+  const failedSavingTheData = () => toast.error("Please Login First");
+  const dataSaved = () => toast.success("Cart Items Saved");
+  const clearCart = () => toast.success("Cart Cleared");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -131,6 +137,12 @@ const Cart = () => {
       userEmail,
       cartItems: transformCartItems(cartItems),
     };
+
+    if (userEmail === null) {
+      setNotification("Please Login First");
+      failedSavingTheData();
+    }
+
     try {
       const response = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/user/add_save_trip/",
@@ -148,6 +160,8 @@ const Cart = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
+      setNotification("Saved Search Successfully");
+      dataSaved();
       console.log("Save successful:", data);
     } catch (error) {
       console.error("Error saving cart:", error);
@@ -158,6 +172,7 @@ const Cart = () => {
   const handleRemoveButton = (cartItems) => {
     removeFromCart(cartItems);
     console.log(cartItems);
+    clearCart();
     window.location.reload();
   };
 
@@ -172,6 +187,12 @@ const Cart = () => {
   return (
     <div className="main-page-container">
       <Header />
+      {notification && (
+        <div>
+          {" "}
+          <ToastContainer />{" "}
+        </div>
+      )}
       <div className="cart-container">
         <div className="details-column">
           <div className="details-card">

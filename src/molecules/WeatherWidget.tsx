@@ -6,7 +6,7 @@ const WeatherWidget = ({ weatherData }) => {
   const { to } = location.state || {};
 
   if (!weatherData || weatherData.length === 0) {
-    return <div>No weather data available</div>;
+    return <div>Fetching Weather</div>;
   }
 
   const { Temperature, Description, Feels, Humidity } = weatherData[0];

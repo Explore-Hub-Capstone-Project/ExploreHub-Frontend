@@ -6,6 +6,11 @@ import WeatherWidget from "./WeatherWidget";
 import HotelWidget from "./HotelWidget";
 import { ReactComponent as IconSvg } from "../styles/Icons/add_shopping_cart_black_24dp.svg";
 import { useCart } from "./CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BounceLoader } from "react-spinners";
+import Lottie from "react-lottie";
+import animationData from "../styles/animations/Animation - 1713904519543.json";
 
 const SearchRoundTrip = () => {
   const location = useLocation();
@@ -14,11 +19,24 @@ const SearchRoundTrip = () => {
   const [hotels, setHotels] = useState([]);
   const [isHotelLoading, setIsHotelLoading] = useState(false);
   const [hotelDetails, setHotelDetails] = useState(null);
+  const [isDataLoading, setIsDataLoading] = useState(true);
   const [selectedHotelDetails, setSelectedHotelDetails] = useState(null);
-
   const [isFlightLoading, setIsFlightLoading] = useState(false);
+  const flightNotify = () => toast.success("Flight Added to Cart!");
+  const hotelNotify = () => toast.success("Hotel Added to Cart!");
+  const searchFailed = () => toast.error("API Error, Try Again!");
+  const [notification, setNotification] = useState("");
 
   const navigate = useNavigate();
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   const { addToCart } = useCart();
 
@@ -82,6 +100,7 @@ const SearchRoundTrip = () => {
       setFlights(data);
     } catch (error) {
       navigate("/search-flights");
+      searchFailed();
       console.error("Failed to fetch flights:", error);
     } finally {
       setIsFlightLoading(false);
@@ -126,6 +145,7 @@ const SearchRoundTrip = () => {
     console.log("Sending Hotel Request Bodyy", requestBody);
 
     try {
+      setIsDataLoading(true);
       const response = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/hotel/search-hotels/",
         {
@@ -149,6 +169,7 @@ const SearchRoundTrip = () => {
       console.error("Failed to fetch Hotels", error);
     } finally {
       setIsHotelLoading(false);
+      setIsDataLoading(false);
     }
   };
 
@@ -190,12 +211,16 @@ const SearchRoundTrip = () => {
 
   const handleAddToCart = (flight) => {
     addToCart(flight);
+    setNotification("Flight added to Cart");
+    flightNotify();
     console.log("Flight added to cart details", flight);
   };
 
   const handleAddHotelToCart = (hotel) => {
     addToCart(hotel);
     localStorage.setItem("hotelDetails", JSON.stringify(hotel));
+    setNotification("Hotel added to Cart");
+    hotelNotify();
     console.log("Hotel added to cart details", hotel);
   };
 
@@ -205,12 +230,31 @@ const SearchRoundTrip = () => {
     fetchHotels();
   }, []);
 
-  // }, [fetchFlights, fetchHotels, fetchWeather, flights, hotels, weather]);
+  if (isDataLoading) {
+    return (
+      <div className="loading-container">
+        <Lottie
+          options={defaultOptions}
+          height={400}
+          width={400}
+          className="lottie-animation"
+          isStopped={!isDataLoading}
+          isPaused={!isDataLoading}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="main-page-container">
       <Header />
       <WeatherWidget weatherData={weather} />
+      {notification && (
+        <div>
+          {" "}
+          <ToastContainer />{" "}
+        </div>
+      )}
       <div className="attractions-button-container">
         <button
           onClick={() =>
@@ -234,92 +278,100 @@ const SearchRoundTrip = () => {
 
       <div className="pageContainer">
         <div className="leftColumn">
-          {flights.map((flight, index) => (
-            <div key={index} className="flightCard">
-              {/* Outbound Flight */}
-              <div className="flightHeader">
-                <img
-                  src={flight.outbound["Airline Logo"]}
-                  alt={flight.outbound["Airline Name"]}
-                  className="airlineLogo"
-                />
-                <div className="flightDetails">
-                  <div className="airlineNameAndNumber">
-                    <span className="airlineName">
-                      {flight.outbound["Airline Name"]}
-                    </span>
-                    <span className="flightNumber">
-                      {flight.outbound["Flight Number"]}
-                    </span>
-                  </div>
-                  <div className="flightInfo">
-                    <div className="airportCode departureCode">
-                      {flight.outbound["Source City Code"]}
-                    </div>
-                    <div className="flightTimeInfo">
-                      <span className="flightDuration">
-                        {flight.outbound["Duration"]}
-                      </span>
-                      <span className="flightDepartureArrivalTime">
-                        {flight.outbound["Departure Time"]} -{" "}
-                        {flight.outbound["Arrival Time"]}
-                      </span>
-                    </div>
-                    <div className="airportCode arrivalCode">
-                      {flight.outbound["Destination City Code"]}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* Return Flight */}
-              <div className="flightHeader">
-                <img
-                  src={flight.return["Airline Logo"]}
-                  alt={flight.return["Airline Name"]}
-                  className="airlineLogo"
-                />
-                <div className="flightDetails">
-                  <div className="airlineNameAndNumber">
-                    <span className="airlineName">
-                      {flight.return["Airline Name"]}
-                    </span>
-                    <span className="flightNumber">
-                      {flight.return["Flight Number"]}
-                    </span>
-                  </div>
-                  <div className="flightInfo">
-                    <div className="airportCode departureCode">
-                      {flight.return["Source City Code"]}
-                    </div>
-                    <div className="flightTimeInfo">
-                      <span className="flightDuration">
-                        {flight.return["Duration"]}
-                      </span>
-                      <span className="flightDepartureArrivalTime">
-                        {flight.return["Departure Time"]} -{" "}
-                        {flight.return["Arrival Time"]}
-                      </span>
-                    </div>
-                    <div className="airportCode arrivalCode">
-                      {flight.return["Destination City Code"]}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flightPrice">
-                <span className="price">${flight.price}</span>
-
-                <IconSvg
-                  className="bookIcon"
-                  onClick={() => handleAddToCart(flight)}
-                />
-              </div>
+          {isFlightLoading ? (
+            <div className="spinner">
+              <BounceLoader color="#36d7b7" size={90} speedMultiplier={1.5} />
             </div>
-          ))}
+          ) : (
+            flights.map((flight, index) => (
+              <div key={index} className="flightCard">
+                {/* Outbound Flight */}
+                <div className="flightHeader">
+                  <img
+                    src={flight.outbound["Airline Logo"]}
+                    alt={flight.outbound["Airline Name"]}
+                    className="airlineLogo"
+                  />
+                  <div className="flightDetails">
+                    <div className="airlineNameAndNumber">
+                      <span className="airlineName">
+                        {flight.outbound["Airline Name"]}
+                      </span>
+                      <span className="flightNumber">
+                        {flight.outbound["Flight Number"]}
+                      </span>
+                    </div>
+                    <div className="flightInfo">
+                      <div className="airportCode departureCode">
+                        {flight.outbound["Source City Code"]}
+                      </div>
+                      <div className="flightTimeInfo">
+                        <span className="flightDuration">
+                          {flight.outbound["Duration"]}
+                        </span>
+                        <span className="flightDepartureArrivalTime">
+                          {flight.outbound["Departure Time"]} -{" "}
+                          {flight.outbound["Arrival Time"]}
+                        </span>
+                      </div>
+                      <div className="airportCode arrivalCode">
+                        {flight.outbound["Destination City Code"]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Return Flight */}
+                <div className="flightHeader">
+                  <img
+                    src={flight.return["Airline Logo"]}
+                    alt={flight.return["Airline Name"]}
+                    className="airlineLogo"
+                  />
+                  <div className="flightDetails">
+                    <div className="airlineNameAndNumber">
+                      <span className="airlineName">
+                        {flight.return["Airline Name"]}
+                      </span>
+                      <span className="flightNumber">
+                        {flight.return["Flight Number"]}
+                      </span>
+                    </div>
+                    <div className="flightInfo">
+                      <div className="airportCode departureCode">
+                        {flight.return["Source City Code"]}
+                      </div>
+                      <div className="flightTimeInfo">
+                        <span className="flightDuration">
+                          {flight.return["Duration"]}
+                        </span>
+                        <span className="flightDepartureArrivalTime">
+                          {flight.return["Departure Time"]} -{" "}
+                          {flight.return["Arrival Time"]}
+                        </span>
+                      </div>
+                      <div className="airportCode arrivalCode">
+                        {flight.return["Destination City Code"]}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flightPrice">
+                  <span className="price">${flight.price}</span>
+
+                  <IconSvg
+                    className="bookIcon"
+                    onClick={() => handleAddToCart(flight)}
+                  />
+                </div>
+              </div>
+            ))
+          )}
         </div>
         <div className="rightColumn">
           {isHotelLoading ? (
-            <div className="spinner">{/* Add Spinner Here */}</div>
+            <div className="spinner">
+              <BounceLoader color="#36d7b7" size={90} speedMultiplier={1.5} />
+            </div>
           ) : (
             hotels.map((hotel, index) => (
               <div className="hotelCard">

@@ -59,16 +59,7 @@ const FlightSearch = () => {
       localStorage.setItem("flightDetails", JSON.stringify(flightDetails));
 
       navigate(path, {
-        state: {
-          searchType,
-          from,
-          to,
-          airportData,
-          departureDate,
-          returnDate,
-          travellers,
-          flightClass,
-        },
+        state: flightDetails,
       });
     } catch (error) {
       console.error("Error seeking airport data", error);
@@ -156,7 +147,7 @@ const FlightSearch = () => {
                 <option>ECONOMY</option>
                 <option>PREMIUM_ECONOMY</option>
                 <option>BUSINESS</option>
-                <option>FIRST_CLASS</option>
+                <option>FIRST</option>
               </select>
             </div>
           </div>
