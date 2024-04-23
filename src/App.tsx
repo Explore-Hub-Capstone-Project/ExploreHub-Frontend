@@ -10,6 +10,7 @@ import Cart from "./molecules/Cart";
 import Attractions from "./molecules/Attractions";
 import SearchOneWayFlight from "./molecules/SearchOneWayFlights";
 import FourOhFour from "./pages/404";
+import Profile from "./organisms/Profile";
 
 class App extends Component {
   render() {
@@ -31,6 +32,7 @@ class App extends Component {
             element={<SearchOneWayFlight />}
           />
           <Route path="*" element={<FourOhFour />} />
+          <Route path="/Profile" element={<Profile />} />
         </Routes>
       </>
     );
