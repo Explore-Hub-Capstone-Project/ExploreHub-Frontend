@@ -29,8 +29,8 @@ jobs:
         run: |
           CI=false npm run build &&
           mv ./build ./html
-        with:
-          env: REACT_APP_BACKEND_URL
+        env: 
+          REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
 
       - name: Copy Build to Server
         uses: appleboy/scp-action@v0.1.7
