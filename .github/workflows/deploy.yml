@@ -4,37 +4,38 @@ on:
   push:
   workflow_dispatch:
     branches:
-      - main  # Set this to your default branch
-env: REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL}}
-  build_and_deploy:
-    environment: production environment
-    runs-on: [ubuntu-latest]
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - main # Set this to your default branch
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # Set this to the node version you use
+env:
+  REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL}}
 
-      - name: Install Dependencies
-        run: npm install
+build_and_deploy:
+  environment: production environment
+  runs-on: [ubuntu-latest]
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
 
-      - name: Build React App
-        run: |
-          CI=false npm run build &&
-          mv ./build ./html
-        with:
-          envs: REACT_APP_BACKEND_URL
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: "16" # Set this to the node version you use
 
-      - name: Copy Build to Server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "./html"
-          target: "/var/www/explorehub.lol"
+    - name: Install Dependencies
+      run: npm install
 
+    - name: Build React App
+      run: |
+        CI=false npm run build &&
+        mv ./build ./html
+      with:
+        envs: REACT_APP_BACKEND_URL
 
+    - name: Copy Build to Server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        source: "./html"
+        target: "/var/www/explorehub.lol"
