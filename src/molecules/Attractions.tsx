@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/Attractions.scss";
+import Lottie from "react-lottie";
+import attractionAnimation from "../styles/animations/Animation - Attraction.json";
 
 const Attractions = () => {
   const [attractions, setAttractions] = useState([]);
@@ -8,8 +10,18 @@ const Attractions = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const location_id = queryParams.get("location_id");
+  const [isLoading, setIsLoading] = useState(true);
   console.log(location_id);
   const langauge = "en_US";
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: attractionAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   useEffect(() => {
     const fetchAttractions = async () => {
@@ -34,6 +46,7 @@ const Attractions = () => {
         const data = await response.json();
         setAttractions(data);
         console.log(data);
+        setIsLoading(false);
       } else {
         console.error("Failed to fetch attractions");
       }
@@ -43,6 +56,21 @@ const Attractions = () => {
       fetchAttractions();
     }
   }, [location_id]);
+
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <Lottie
+          options={defaultOptions}
+          height={400}
+          width={400}
+          className="lottie-animation"
+          isStopped={!isLoading}
+          isPaused={!isLoading}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="attraction-container">
