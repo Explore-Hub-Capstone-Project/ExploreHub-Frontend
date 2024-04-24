@@ -1,10 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../organisms/header";
 import "../styles/SearchFlights.scss";
 import { getAirportIDs } from "./GetAirportID";
 import { useNavigate } from "react-router-dom";
 
 const FlightSearch = () => {
+  const images = [
+    "https://images.unsplash.com/photo-1562428309-f97fc8e256e7?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1433838552652-f9a46b332c40?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1550340499-a6c60fc8287c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1531464882680-9a02c0b5818e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  ];
+
+  const [currentImage, setCurrentImage] = useState(0);
+  const [loadedImages, setLoadedImages] = useState({});
+
+  useEffect(() => {
+    images.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => {
+        setLoadedImages((prev) => ({ ...prev, [url]: true }));
+      };
+    });
+
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const [searchType, setSearchType] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -67,7 +94,10 @@ const FlightSearch = () => {
   };
 
   return (
-    <div className="home-container">
+    <div
+      className="home-container"
+      style={{ backgroundImage: `url(${images[currentImage]})` }}
+    >
       <Header />
       <h2 className="search-heading">Let's plan your trip</h2>
 

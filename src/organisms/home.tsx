@@ -1,35 +1,48 @@
-import React, { useState } from "react";
-import axios, { isCancel, AxiosError } from "axios";
+import React, { useState, useEffect } from "react";
 import Header from "./header";
 import Hero from "./hero";
 import "../styles/home.scss";
 
-async function getAllUsers() {
-  try {
-    const apiUrl = process.env.REACT_APP_API_URL;
-    const response = await axios.get(`${apiUrl}/user`);
-    const allUsers = response.data;
-    console.log(response);
-    return allUsers;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 function Home() {
-  const [data, setData] = useState("");
+  const images = [
+    "https://images.unsplash.com/photo-1562428309-f97fc8e256e7?q=80&w=2068&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1433838552652-f9a46b332c40?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1550340499-a6c60fc8287c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1531464882680-9a02c0b5818e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  ];
 
-  async function doQuery(e) {
-    e.preventDefault();
-    const allUsers = await getAllUsers();
-    setData(JSON.stringify(allUsers));
-  }
+  const [currentImage, setCurrentImage] = useState(0);
+  const [loadedImages, setLoadedImages] = useState({});
+
+  useEffect(() => {
+    images.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => {
+        setLoadedImages((prev) => ({ ...prev, [url]: true }));
+      };
+    });
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextImageIndex = (currentImage + 1) % images.length;
+      const nextImageUrl = images[nextImageIndex];
+      if (loadedImages[nextImageUrl]) {
+        setCurrentImage(nextImageIndex);
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [currentImage, loadedImages]);
 
   return (
-    <div className="home-container">
+    <div
+      className="home-container"
+      style={{ backgroundImage: `url(${images[currentImage]})` }}
+    >
       <Header />
-
-      {/* <NavigationBar /> */}
       <Hero />
     </div>
   );
