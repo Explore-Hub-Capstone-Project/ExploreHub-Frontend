@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import CountryList from "react-select-country-list";
 import "../styles/SignUpPage.scss";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -15,12 +19,29 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
 
+  const options = useMemo(() => CountryList().getData(), []);
+  const [country, setCountry] = useState("");
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
       [name]: value,
     });
+  };
+
+  const handleCountryChange = (value) => {
+    setFormValues({
+      ...formValues,
+      country: value.label,
+    });
+  };
+
+  const handlePhoneChange = (value) => {
+    setFormValues((prev) => ({
+      ...prev,
+      mobile: value,
+    }));
   };
 
   const handleSubmit = async (event) => {
@@ -66,19 +87,21 @@ const SignUpPage = () => {
             value={formValues.lastname}
             onChange={handleInputChange}
           />
-          <input
-            type="text"
-            name="country"
-            placeholder="Country of Residence"
-            value={formValues.country}
-            onChange={handleInputChange}
+          <Select
+            options={options}
+            onChange={handleCountryChange}
+            value={options.find(
+              (option) => option.label === formValues.country
+            )}
+            placeholder="Select Country"
+            classNamePrefix="select"
           />
-          <input
-            type="tel"
-            name="mobile"
-            placeholder="Mobile Number"
+          <PhoneInput
+            international
+            defaultCountry="US"
             value={formValues.mobile}
-            onChange={handleInputChange}
+            onChange={handlePhoneChange}
+            placeholder="Enter phone number"
           />
           <input
             type="email"
