@@ -52,9 +52,11 @@ const Header = () => {
       <nav className="header-nav">
         <Link to="/">Home</Link>
         <Link to="/discover">Discover</Link>
-        <Link to="/services">Services</Link>
+        <Link to="/ServicesPage">Services</Link>
         <Link to="/aboutus">About Us</Link>
-        <Link to="/contact">Contact Us</Link>
+        <Link to="https://github.com/Explore-Hub-Capstone-Project">
+          Contact Us
+        </Link>
       </nav>
 
       <div className="auth-buttons">
