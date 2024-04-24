@@ -12,7 +12,8 @@ import SearchOneWayFlight from "./molecules/SearchOneWayFlights";
 import FourOhFour from "./pages/404";
 import Profile from "./organisms/Profile";
 import AboutUs from "./organisms/aboutUs";
-
+import Footer from "./organisms/footer";
+import ServicesPage from "./molecules/ServicesPage";
 class App extends Component {
   render() {
     return (
@@ -35,7 +36,10 @@ class App extends Component {
           <Route path="*" element={<FourOhFour />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Aboutus" element={<AboutUs />} />
+          {/* <Route path="/ServiesPage" element={<ServicesPage />} /> */}
+          <Route path="/ServicesPage" element={<ServicesPage />} />
         </Routes>
+        <Footer />
       </>
     );
   }
