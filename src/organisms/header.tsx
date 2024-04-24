@@ -31,6 +31,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userEmail");
+    window.location.reload();
     setUserName("");
     navigate("/");
   };

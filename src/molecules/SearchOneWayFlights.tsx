@@ -147,7 +147,7 @@ const SearchOneWayFlight = () => {
   }
 
   return (
-    <div className="main-page-container">
+    <div className="main-page-container1">
       <Header />
       <WeatherWidget weatherData={weather} />
       {notification && (
