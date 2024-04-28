@@ -26,7 +26,7 @@ const Attractions = () => {
   useEffect(() => {
     const fetchAttractions = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/attraction/search-attractions`,
+        process.env.REACT_APP_BACKEND_URL + "/attraction/search-attractions",
         {
           method: "POST",
           headers: {
