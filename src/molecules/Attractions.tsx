@@ -31,7 +31,7 @@ const Attractions = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-RapidAPI-Key": process.env.X_RAPID_API_KEY,
+            "X-RapidAPI-Key": process.env.X_RAPIDAPI_KEY_ATTRACTION,
             "X-RapidAPI-Host": process.env.X_RAPID_API_HOST,
           },
           body: JSON.stringify({
