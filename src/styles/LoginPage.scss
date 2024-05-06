@@ -23,9 +23,10 @@
     .login-form {
       display: flex;
       flex-direction: column;
+      margin-bottom: 15px;
 
       input {
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
         padding: 15px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -61,6 +62,41 @@
           text-decoration: underline;
         }
       }
+    }
+  }
+}
+
+.password-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #fff; // Set the background color as needed
+  border: 1px solid #ccc; // Set border color as needed
+  // padding: 5px 10px; // Adjust padding for better alignment
+  border-radius: 5px; // Optional for rounded corners
+
+  input[type="password"] {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    // padding: 8px 10px;
+    font-size: 16px; // Adjust font size as needed
+
+    &::placeholder {
+      color: #888; // Adjust placeholder color as needed
+    }
+  }
+
+  .flex {
+    cursor: pointer;
+    position: absolute;
+    right: 10px; // Adjust as necessary to position the icon inside the box
+    display: flex;
+    align-items: center;
+
+    .icon {
+      font-size: 25px; // Icon size, adjust as necessary
+      color: #333; // Icon color, adjust as necessary
     }
   }
 }

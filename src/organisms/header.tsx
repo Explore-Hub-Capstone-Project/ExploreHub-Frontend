@@ -51,7 +51,7 @@ const Header = () => {
 
       <nav className="header-nav">
         <Link to="/">Home</Link>
-        <Link to="/discover">Discover</Link>
+        {/* <Link to="/discover">Discover</Link> */}
         <Link to="/ServicesPage">Services</Link>
         <Link to="/aboutus">About Us</Link>
         <Link to="https://github.com/Explore-Hub-Capstone-Project">
